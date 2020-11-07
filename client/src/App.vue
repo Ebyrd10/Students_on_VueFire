@@ -1,21 +1,31 @@
 <template>
-  <div id="app">
-    <StudentTable/>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="amber darken-1"
+    >
+    </v-app-bar>
+    <v-main>
+      <StudentTable/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import StudentTable from './components/StudentTable.vue'
-
+import StudentTable from './components/StudentTable.vue';
 
 export default {
   name: 'App',
-  components: {
-    StudentTable
-  }
-}
-</script>
 
+  components: {
+    StudentTable,
+  },
+
+  data: () => ({
+    //
+  }),
+};
+</script>
 <style>
 :root {
   --primary-color: #9E9E9E;
@@ -31,6 +41,7 @@ body {
   background: var(--primary-color);
   font-family: Arial, Helvetica, sans-serif;
   color: var(--tertiary-color);
+  overflow: hidden;
 }
 #app{
   display: flex;
@@ -41,6 +52,9 @@ body {
 .student-table{
   flex: 3;
   margin: 5rem;
-
+  background-color: var(--secondary-color);
+}
+.table-header{
+  color: red;
 }
 </style>

@@ -1,11 +1,23 @@
 <template>
   <div class="student-table">
-    <div class="row" v-for="(student, id) in students" v-bind:key="id">
-      <div class="tableItem"> {{ student.firstName }}</div>
-      <div class="tableItem"> {{ student.lastName }}</div>
-      <div class="tableItem"> {{ student.age }}</div>
-    </div>
-    <h1>{{ students }}</h1>
+    <v-data-table
+    :headers="headers"
+    :items="students"
+    :items-per-page="5"
+    class="elevation-8"
+    hide-default-footer
+    :search="search"
+    >
+    <!-- Search Bar Template -->
+    <template v-slot:top>
+      <v-text-field
+      v-model="search"
+      label="Search"
+      class="mx-4"
+      ></v-text-field>
+      <div id="table-header" class="amber darken-1">Students</div>
+    </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -15,7 +27,13 @@ import { db } from "../db.js";
 export default {
   data() {
     return {
+      search:'',
       students: [],
+      headers: [
+        {text: 'First', value: 'firstName'},
+        {text: 'Last', value: 'lastName'},
+        {text: 'Age', value: 'age'},
+      ]
     };
   },
 
@@ -27,15 +45,5 @@ export default {
 };
 </script>
 
-<style scoped>
-.row{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-}
-.tableItem{
- margin: 2.5rem;
- background-color: var(--secondary-color);
-}
+<style>
 </style>
