@@ -7,18 +7,21 @@
     </v-app-bar>
     <v-main>
       <StudentTable/>
+      <AddForm/>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import StudentTable from './components/StudentTable.vue';
+import AddForm from './components/AddForm.vue';
 
 export default {
   name: 'App',
 
   components: {
     StudentTable,
+    AddForm,
   },
 
   data: () => ({

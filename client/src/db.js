@@ -14,3 +14,6 @@ firebase.initializeApp({
 
 //Exports the firestore database as a variable
 export const db = firebase.firestore();
+
+//Grabbing firestore server timestamp to use for universal compatibility
+export const { serverTimestamp } = firebase.firestore.FieldValue;
