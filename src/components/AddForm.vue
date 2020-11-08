@@ -48,7 +48,7 @@
 //importing firestore database and timestamps for querying and adding to the database
 import { db, serverTimestamp } from "../db.js";
 import VueRecaptcha from 'vue-recaptcha';
-// import axios from 'axios';
+import axios from 'axios';
 
 
 export default {
@@ -89,28 +89,31 @@ methods: {
     onSubmit(){
         this.$refs.invisibleRecaptcha.execute()
     },
-    onVerify(){
-        return;
-    // onVerify(token){
+    // onVerify(){
+    //     return;
+    onVerify(token){
         //This is the primary recaptcha function from vue-recaptch,
         // it should send a token from recaptcha to the cloud function which then 'asks' google if this token is valid, at which point
         //the onVerify functions either allows a human to add to the database or rejects a bot from adding to the database
 
-        // return new Promise((resolve, reject) => {
-        //     const googleURL = 'https://www.google.com/recaptcha/api/siteverify'
-        //     const data = {
-        //       secret: '6LcNlOAZAAAAAMbA8Ml2t5gMwQJQhTfqlKMDduOi',
-        //       response: token
-        //     //   response: req.body.recaptchaToken
-        //     }
-        //     axios.post(googleURL, data)
-        //     .then(() => {
-        //         this.addItem()
-        //         resolve(true)
-        //     }).catch(err=>{
-        //         reject(err)
-        //     })
-        // })
+        return new Promise((resolve, reject) => {
+
+             //location of the cloud function
+            const cloudFunctionURL = 'https://us-central1-students-on-vuefire-17fe1.cloudfunctions.net/sendToGoogle'
+            const data = {
+              secret: '6LcNlOAZAAAAAMbA8Ml2t5gMwQJQhTfqlKMDduOi',
+              itemToSend: token
+
+            }
+            axios.post(cloudFunctionURL, data)
+            .then((response) => {
+                console.log(response)
+                this.addItem()
+                resolve(true)
+            }).catch(err=>{
+                reject(err)
+            })
+        })
     },
     onExpired(){
         console.log("reCAPTCHA Expired")
