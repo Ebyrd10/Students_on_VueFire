@@ -48,7 +48,7 @@
 //importing firestore database and timestamps for querying and adding to the database
 import { db, serverTimestamp } from "../db.js";
 import VueRecaptcha from 'vue-recaptcha';
-import axios from 'axios';
+// import axios from 'axios';
 
 
 export default {
@@ -89,7 +89,9 @@ methods: {
     onSubmit(){
         this.$refs.invisibleRecaptcha.execute()
     },
-    onVerify(token){
+    onVerify(){
+        return;
+    // onVerify(token){
         //This is the primary recaptcha function from vue-recaptch,
         // it should send a token from recaptcha to the cloud function which then 'asks' google if this token is valid, at which point
         //the onVerify functions either allows a human to add to the database or rejects a bot from adding to the database
