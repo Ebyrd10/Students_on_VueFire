@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <v-card id="addForm" class="
+  d-flex
+  pa-6
+  flex-column
+  ">
       <v-form
       ref="form"
       >
@@ -21,12 +25,12 @@
       ></v-text-field>
 
     <v-btn
-    color="green"
+    color="amber darken-1"
     class="mr-4"
     @click="addItem"
     >Add</v-btn>
       </v-form>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -78,6 +82,9 @@ firestore: {
 }
 </script>
 
-<style>
-
+<style scoped>
+.v-card{
+    margin: 5rem;
+    width: 50%;
+}
 </style>

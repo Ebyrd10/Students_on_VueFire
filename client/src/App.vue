@@ -3,11 +3,21 @@
     <v-app-bar
       app
       color="amber darken-1"
+      height = 70
     >
+    <h1 class="mx-auto white--text mb-2 font-weight-medium">
+      Students on VueFire 🔥
+      </h1>
     </v-app-bar>
-    <v-main>
+    <v-main id="main-window">
+      <v-row>
+      <v-col>
       <StudentTable/>
+      </v-col>
+      <v-col>
       <AddForm/>
+      </v-col>
+      </v-row>
     </v-main>
   </v-app>
 </template>
@@ -44,20 +54,8 @@ body {
   background: var(--primary-color);
   font-family: Arial, Helvetica, sans-serif;
   color: var(--tertiary-color);
-  overflow: hidden;
 }
-#app{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-}
-.student-table{
-  flex: 3;
-  margin: 5rem;
-  background-color: var(--secondary-color);
-}
-.table-header{
-  color: red;
+#main-window{
+  /* margin: 5rem; */
 }
 </style>
