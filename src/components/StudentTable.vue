@@ -25,17 +25,6 @@
     <v-dialog 
     v-model="dialog"
     max-width="250px">
-      <!-- The edit button styling -->
-      <!-- <template v-slot:activator="{ on, attrs}"> 
-        <v-btn
-        color="amber"
-        lighten
-        class="mb-2"
-        v-bind="attrs"
-        v-on="on">
-          ITEMITEMITEM
-        </v-btn>
-      </template> -->
   <!-- What is shown when the dialog box is opened -->
     <v-card>
       <v-card-title>
@@ -67,6 +56,7 @@
           </v-row>
         </v-container>
       </v-card-text>
+      <!-- The save and cancel buttons on the edit dialogue -->
     <v-card-actions>
     <v-btn
     color="amber darken-6"
@@ -104,6 +94,7 @@
 </template>
 
 <script>
+//Bringing in the firestore db
 import { db } from "../db.js";
 
 export default {
@@ -117,20 +108,23 @@ export default {
         {text: 'Age', value: 'age'},
         {text: 'Modify', value: 'modify', sortable: false},
       ],
+      //a blank object for the purpose of resetting the currently edited item to blank after item changes have been saved
       blankItem: {
         firstName: "",
         lastName: "",
         age: ""
     },
+    // This is the current item being edited
     editedItem: {
         firstName: "",
         lastName: "",
         age: ""
     },
+    //This boolean controls whether or not the 'edit student' dialog box is open or closed
     dialog: false,
     };
   },
-
+  //A watcher to make extra sure that the dialog box opens and closes as intended
   watch: {
     dialog (val){
       val || this.closeDialog()
@@ -152,28 +146,24 @@ export default {
       this.dialog = true;
     },
     saveChanges(){
-      // db.doc(something).set(this.editedItem)
-      // .then(()=> {
-        // console.log(db.collection("students").doc())
-        console.log(this.editedItem.id);
-        console.log(this.editedItem.firstName);
-        console.log("Updated!")
-
       db.collection('students')
+      //look for the editedItem id since it should be equal to the id of the actual document we're looking for
       .doc(this.editedItem.id)
+      //then set the new edited item to override the old item, with the unique id not changing
       .set(this.editedItem)
       .then(() => {
         console.log('Document updated')
       })
-
         this.closeDialog();
     },
     deleteItem(item){
+      //Deletes a student entry based on the id of the prop student
       db.collection('students').doc(item.id).delete();
       console.log(item.id);
     }
   },
 
+  //Bringing in the database 
   firestore: {
     students: db.collection("students"),
   },

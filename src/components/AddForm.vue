@@ -24,6 +24,7 @@
       label="Age"
       ></v-text-field>
 
+    <!-- Google recaptcha in the form of the vue-recaptcha package -->
     <vue-recaptcha 
     sitekey=6LcNlOAZAAAAAPd_umEDPYHm4oJBjN89GK2UkOsx
     ref="recaptcha"
@@ -79,7 +80,7 @@ methods: {
             age: newAge,
             createdAt: serverTimestamp()
         });
-
+        //resets the new entry data to blank
         this.newFirstName = "";
         this.newLastName = "";
         this.newAge= "";
@@ -89,21 +90,25 @@ methods: {
         this.$refs.invisibleRecaptcha.execute()
     },
     onVerify(token){
-        return new Promise((resolve, reject) => {
-            const googleURL = 'https://www.google.com/recaptcha/api/siteverify'
-            const data = {
-              secret: '6LcNlOAZAAAAAMbA8Ml2t5gMwQJQhTfqlKMDduOi',
-              response: token
-            //   response: req.body.recaptchaToken
-            }
-            axios.post(googleURL, data)
-            .then(() => {
-                this.addItem()
-                resolve(true)
-            }).catch(err=>{
-                reject(err)
-            })
-        })
+        //This is the primary recaptcha function from vue-recaptch,
+        // it should send a token from recaptcha to the cloud function which then 'asks' google if this token is valid, at which point
+        //the onVerify functions either allows a human to add to the database or rejects a bot from adding to the database
+
+        // return new Promise((resolve, reject) => {
+        //     const googleURL = 'https://www.google.com/recaptcha/api/siteverify'
+        //     const data = {
+        //       secret: '6LcNlOAZAAAAAMbA8Ml2t5gMwQJQhTfqlKMDduOi',
+        //       response: token
+        //     //   response: req.body.recaptchaToken
+        //     }
+        //     axios.post(googleURL, data)
+        //     .then(() => {
+        //         this.addItem()
+        //         resolve(true)
+        //     }).catch(err=>{
+        //         reject(err)
+        //     })
+        // })
     },
     onExpired(){
         console.log("reCAPTCHA Expired")
@@ -115,6 +120,7 @@ methods: {
     },
 },
 
+//this fills the student array with the real time data from the db
 firestore: {
     students: db.collection("students"),
   },
