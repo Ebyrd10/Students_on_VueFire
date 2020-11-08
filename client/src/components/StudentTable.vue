@@ -20,25 +20,27 @@
       class="mx-4"
       ></v-text-field>
       <div class="amber darken-1 mx-auto amber--text text--darken-1 ml-1 mr-1">Students</div>
-    </template>
-    </v-data-table>
+    
+
     <!-- Edit Dialog Box -->
-    <v-dialog v-model="dialog">
-      <template v-slot:activator="{ on, attrs}"> 
+    <v-dialog 
+    v-model="dialog"
+    max-width="250px">
+      <!-- The edit button styling -->
+      <!-- <template v-slot:activator="{ on, attrs}"> 
         <v-btn
-        color="red"
-        dark
+        color="amber"
+        lighten
         class="mb-2"
         v-bind="attrs"
         v-on="on">
-          New Item
+          ITEMITEMITEM
         </v-btn>
-      </template>
-
-  <!-- What is shown when the dialogue box is opened -->
+      </template> -->
+  <!-- What is shown when the dialog box is opened -->
     <v-card>
       <v-card-title>
-        Edit Item
+      Edit Item
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -66,9 +68,39 @@
           </v-row>
         </v-container>
       </v-card-text>
+    <v-card-actions>
+    <v-btn
+    color="amber darken-6"
+    text
+    @click="closeDialog"
+    >Cancel</v-btn>
+    <v-btn
+    color="amber darken-6"
+    text
+    @click="saveChanges"
+    >Save</v-btn>
+  </v-card-actions>
     </v-card>
-
     </v-dialog>
+  </template>
+    <!-- This is the templating for the edit and delete buttons in the "modify" column -->
+    <template v-slot:item.modify="{ item }">
+      <v-icon
+        small
+        class="mr-2"
+        @click="openDialog(item)"
+      >
+        ✏️
+      </v-icon>
+        <v-icon
+        small
+        class="mr-2"
+        @click="deleteItem(item)"
+      >
+        🗑️
+      </v-icon>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -102,22 +134,44 @@ export default {
 
   watch: {
     dialog (val){
-      val || this.closeDialogue()
+      val || this.closeDialog()
     },
   },
 
   methods: {
-    closeDialogue(){
+    closeDialog(){
       this.dialog = false;
       this.$nextTick(()=>{
         //Sets the edited item in state equal to a blank template item
         this.editedItem = Object.assign({}, this.blankItem)
       })
     },
-    openDialogue(item){
+    openDialog(item){
       //Sets the edited item in state equal to the current item being selected by the user
       this.editedItem = Object.assign({}, item)
+      this.editedItem.id = item.id;
       this.dialog = true;
+    },
+    saveChanges(){
+      // db.doc(something).set(this.editedItem)
+      // .then(()=> {
+        // console.log(db.collection("students").doc())
+        console.log(this.editedItem.id);
+        console.log(this.editedItem.firstName);
+        console.log("Updated!")
+
+      db.collection('students')
+      .doc(this.editedItem.id)
+      .set(this.editedItem)
+      .then(() => {
+        console.log('Document updated')
+      })
+
+        this.closeDialog();
+    },
+    deleteItem(item){
+      db.collection('students').doc(item.id).delete();
+      console.log(item.id);
     }
   },
 
