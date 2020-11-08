@@ -12,9 +12,11 @@
     <v-main id="main-window">
       <v-row>
       <v-col>
+        <!-- The main table connected to the database -->
       <StudentTable/>
       </v-col>
       <v-col>
+        <!-- The form which allows a user to add a new entry to the database -->
       <AddForm/>
       </v-col>
       </v-row>
@@ -28,34 +30,16 @@ import AddForm from './components/AddForm.vue';
 
 export default {
   name: 'App',
-
   components: {
     StudentTable,
     AddForm,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
 <style>
-:root {
-  --primary-color: #9E9E9E;
-  --secondary-color: #00C853;
-  --tertiary-color: #E0E0E0;
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 body {
-  background: var(--primary-color);
+  background: #9E9E9E;
   font-family: Arial, Helvetica, sans-serif;
-  color: var(--tertiary-color);
-}
-#main-window{
-  /* margin: 5rem; */
+  color: #E0E0E0;
 }
 </style>

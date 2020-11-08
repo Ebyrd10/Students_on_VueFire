@@ -4,7 +4,9 @@ import App from './App.vue'
 //Import and use the Vuefire plugin for easy firebase db mangement
 import {firestorePlugin} from 'vuefire'
 
+//Using vuetify material theme
 import vuetify from './plugins/vuetify';
+
 Vue.use(firestorePlugin)
 
 Vue.config.productionTip = false

@@ -87,12 +87,15 @@ methods: {
     onSubmit(){
         this.$refs.invisibleRecaptcha.execute()
     },
-    onVerify(response){
-        console.log('reCAPTCHA Verified with response: ' + response)
-        // axios.post("/token",{
-        //     recaptchaToken: response
+    onVerify(token){
+        console.log('reCAPTCHA Verified with response: ' + token)
+        // axios.post("https://students-on-vuefire-17fe1.firebaseapp.com/token",{
+            //send the token to the server and wait for a response
+        //     recaptchaToken: token
         // }).then((response => {
         //     console.log(response.data.message)
+            // if success
+            //additem()
         // }))
     },
     onExpired(){
