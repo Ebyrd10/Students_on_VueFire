@@ -7,9 +7,7 @@
     <v-data-table
     :headers="headers"
     :items="students"
-    :items-per-page="5"
     class="elevation-8"
-    hide-default-footer
     :search="search"
     >
     <!-- Search Bar Template -->

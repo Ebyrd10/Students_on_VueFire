@@ -24,11 +24,20 @@
       label="Age"
       ></v-text-field>
 
+    <vue-recaptcha 
+    sitekey=6LcNlOAZAAAAAPd_umEDPYHm4oJBjN89GK2UkOsx
+    ref="recaptcha"
+    @verify = "onVerify"
+    @expired = "onExpired"
+    @error = "onError"
+    size="invisible"
+    >
     <v-btn
     color="amber darken-1"
     class="mr-4"
     @click="addItem"
     >Add</v-btn>
+    </vue-recaptcha>
       </v-form>
   </v-card>
 </template>
@@ -37,10 +46,12 @@
 
 //importing firestore database and timestamps for querying and adding to the database
 import { db, serverTimestamp } from "../db.js";
+import VueRecaptcha from 'vue-recaptcha';
 
 
 export default {
     name: 'AddForm',
+    components: { VueRecaptcha },
 data () {
     return {
     newFirstName: "",
@@ -72,6 +83,25 @@ methods: {
         this.newLastName = "";
         this.newAge= "";
 
+    },
+    onSubmit(){
+        this.$refs.invisibleRecaptcha.execute()
+    },
+    onVerify(response){
+        console.log('reCAPTCHA Verified with response: ' + response)
+        // axios.post("/token",{
+        //     recaptchaToken: response
+        // }).then((response => {
+        //     console.log(response.data.message)
+        // }))
+    },
+    onExpired(){
+        console.log("reCAPTCHA Expired")
+        this.$refs.recaptcha.reset();
+        console.log("reCAPTCHA Reset")
+    },
+    onError(){
+        console.log("reCAPTCHA Error")
     },
 },
 
