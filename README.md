@@ -17,6 +17,7 @@ Front-End
 
 ![students_on_vuefire](students_on_vuefire.PNG)
 
+
 Database on Firestore
 
 ![firestore_db](firestore_db.PNG)
