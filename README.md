@@ -12,6 +12,7 @@ A small app to display a table of imaginary students, stored in a cloud database
 * Cloud Firestore
 * VueFire
 * Vuetify
+* Cloud Functions
 
 Front-End
 

@@ -89,8 +89,7 @@ methods: {
     onSubmit(){
         this.$refs.invisibleRecaptcha.execute()
     },
-    // onVerify(){
-    //     return;
+    
     onVerify(token){
         //This is the primary recaptcha function from vue-recaptch,
         // it should send a token from recaptcha to the cloud function which then 'asks' google if this token is valid, at which point
