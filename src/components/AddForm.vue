@@ -47,6 +47,7 @@
 //importing firestore database and timestamps for querying and adding to the database
 import { db, serverTimestamp } from "../db.js";
 import VueRecaptcha from 'vue-recaptcha';
+import axios from 'axios';
 
 
 export default {
@@ -88,15 +89,21 @@ methods: {
         this.$refs.invisibleRecaptcha.execute()
     },
     onVerify(token){
-        console.log('reCAPTCHA Verified with response: ' + token)
-        // axios.post("https://students-on-vuefire-17fe1.firebaseapp.com/token",{
-            //send the token to the server and wait for a response
-        //     recaptchaToken: token
-        // }).then((response => {
-        //     console.log(response.data.message)
-            // if success
-            //additem()
-        // }))
+        return new Promise((resolve, reject) => {
+            const googleURL = 'https://www.google.com/recaptcha/api/siteverify'
+            const data = {
+              secret: '6LcNlOAZAAAAAMbA8Ml2t5gMwQJQhTfqlKMDduOi',
+              response: token
+            //   response: req.body.recaptchaToken
+            }
+            axios.post(googleURL, data)
+            .then(() => {
+                this.addItem()
+                resolve(true)
+            }).catch(err=>{
+                reject(err)
+            })
+        })
     },
     onExpired(){
         console.log("reCAPTCHA Expired")
