@@ -15,7 +15,7 @@ A small app to display a table of imaginary students, stored in a cloud database
 
 Front-End
 
-![students_vuefire](students_vuefire.PNG)
+![students_vuefire](students_vuefire.png)
 
 
 Database on Firestore
